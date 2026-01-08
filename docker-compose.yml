@@ -1,43 +1,33 @@
-version: '3.8'
-
 services:
   qca-leeq:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     image: qca-leeq:latest
     container_name: qca-leeq
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # Inherits OPENAI_API_KEY from host automatically
+      - OPENAI_API_KEY
       - EPII_EXPERIMENT_SET=leeq
     volumes:
-      # Persist data directory
       - qca-data:/app/CalibrationNTKAgent/data
-      # Optional: mount local config for customization
-      # - ./config:/app/config:ro
     stdin_open: true
     tty: true
     command: tui
 
-  # Web UI only mode
-  qca-webui:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # Web UI only mode: docker compose up webui
+  webui:
+    build: .
     image: qca-leeq:latest
     container_name: qca-webui
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_KEY
       - EPII_EXPERIMENT_SET=leeq
     volumes:
       - qca-data:/app/CalibrationNTKAgent/data
     command: serve
-    profiles:
-      - webui
 
 volumes:
   qca-data:

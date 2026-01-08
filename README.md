@@ -39,28 +39,29 @@ docker build -t qca-leeq .
 
 #### Interactive TUI with Web UI
 ```bash
-docker run -it -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq
+docker run -it -p 8000:8000 -e OPENAI_API_KEY qca-leeq
 ```
+- Automatically inherits `OPENAI_API_KEY` from host environment
 - Web UI available at http://localhost:8000
 - TUI runs in terminal for interactive commands
 
 #### Web UI Only
 ```bash
-docker run -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq serve
+docker run -p 8000:8000 -e OPENAI_API_KEY qca-leeq serve
 ```
 
 #### Execute Single Command
 ```bash
-docker run -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq exec "list all available experiments"
+docker run -e OPENAI_API_KEY qca-leeq exec "list all available experiments"
 ```
 
-#### Using Docker Compose
+#### Using Docker Compose (Recommended)
 ```bash
-# Interactive mode
-docker-compose up
+# Interactive TUI + Web UI (inherits OPENAI_API_KEY from host)
+docker compose up
 
 # Web UI only
-docker-compose --profile webui up qca-webui
+docker compose up webui
 ```
 
 ## Available Experiments
@@ -82,20 +83,20 @@ The container comes with 10+ LeeQ experiments auto-discovered:
 
 ### List Experiments
 ```bash
-docker run -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq exec "list all available experiments"
+docker compose run --rm qca-leeq exec "list all available experiments"
 ```
 
 ### Run Calibration
 ```bash
-docker run -it -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq exec \
+docker compose run --rm qca-leeq exec \
   "calibrate qubit 0 starting with resonator spectroscopy, then Rabi and Ramsey"
 ```
 
 ### Interactive Session
 ```bash
-docker run -it -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY qca-leeq shell
-# Then use qca commands:
-# qca exec "run T1 measurement on qubit 0"
+docker compose up
+# Web UI at http://localhost:8000
+# TUI in terminal
 ```
 
 ## Configuration
