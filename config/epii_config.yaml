@@ -1,0 +1,31 @@
+# EPII Configuration for LeeQ Integration
+#
+# This configuration connects the Quantum Calibration Agent to LeeQ's
+# experiment framework using the declarative service pattern.
+
+epii:
+  enabled: true
+
+  # Use LeeQ as the experiment framework
+  framework_module: leeq
+
+  # Active experiment set (leeq experiments auto-discovered)
+  active_set: leeq
+
+  # Experiment sets configuration
+  experiment_sets:
+    leeq:
+      path: /app/LeeQ/leeq/epii
+      description: "LeeQ superconducting qubit calibration experiments"
+      service_module: leeq.epii.leeq_epii_service
+
+    # Built-in qubit experiments (fallback)
+    qubit:
+      path: /app/CalibrationNTKAgent/quantum_calibration_agent/epii/experiments
+      description: "Built-in qubit calibration experiments"
+
+  # Simulation mode (LeeQ uses high-level simulator)
+  simulation_mode: true
+
+  # Execution timeout in seconds
+  timeout: 300

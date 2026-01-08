@@ -1,0 +1,8 @@
+[submodule "CalibrationNTKAgent"]
+	path = CalibrationNTKAgent
+	url = git@github.com:ShuxiangCao/CalibrationNTKAgent.git
+	branch = dev
+[submodule "LeeQ"]
+	path = LeeQ
+	url = git@github.com:ShuxiangCao/LeeQ.git
+	branch = epii-integration
